@@ -19,10 +19,6 @@ type QuoteApplication struct {
 }
 
 func setupResponse(w *http.ResponseWriter, req *http.Request) {
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-	(*w).Header().Set("Access-Control-Allow-Methods", "GET, POST")
-	(*w).Header().Set("Access-Control-Allow-Headers",
-		"Accept, Content-Type, Content-Length, Accept-Encoding, X-Requested-With, Authorization, X-CSRF-Token, access-control-allow-origin, access-control-allow-headers")
 	(*w).Header().Set("Content-Type", "application/json; charset=utf-8")
 }
 
