@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/user"
 	"strconv"
 )
 
@@ -24,9 +25,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	app := &QuoteApplication{Quotes: QuoteList{}}
+	usr, _ := user.Current()
+	app := &QuoteApplication{
+		Quotes:          QuoteList{},
+		QuoteDbJsonPath: usr.HomeDir + "/.quoteservice.json",
+	}
 
-	app.Quotes.loadQuotes()
+	loadQuotes(app)
 
 	http.HandleFunc("/", app.RootHandler)
 	http.HandleFunc("/api/quote/", app.QuoteHandler)

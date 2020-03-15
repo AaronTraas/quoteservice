@@ -17,7 +17,8 @@ type Response struct {
 }
 
 type QuoteApplication struct {
-	Quotes QuoteList
+	Quotes          QuoteList
+	QuoteDbJsonPath string
 }
 
 func sendJsonResponse(w http.ResponseWriter, response Response) {
@@ -175,8 +176,10 @@ func (app *QuoteApplication) SubmitHandler(w http.ResponseWriter, r *http.Reques
 
 func (app *QuoteApplication) ApproveHandler(w http.ResponseWriter, r *http.Request) {
 	sendJsonResponse(w, setApprovalResponse(&app.Quotes, r, true))
+	app.dumpQuotes()
 }
 
 func (app *QuoteApplication) DisapproveHandler(w http.ResponseWriter, r *http.Request) {
 	sendJsonResponse(w, setApprovalResponse(&app.Quotes, r, false))
+	app.dumpQuotes()
 }
