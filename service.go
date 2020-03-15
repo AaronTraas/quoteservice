@@ -24,7 +24,7 @@ func sendJsonResponse(w http.ResponseWriter, response Response) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
 	if response.Status == 0 {
-		response.Status = 200
+		response.Status = http.StatusOK
 	}
 
 	w.WriteHeader(response.Status)
@@ -77,7 +77,7 @@ func setApprovalResponse(quotes *QuoteList, r *http.Request, approved bool) Resp
 	}
 }
 
-func (app *QuoteApplication) rootHandler(w http.ResponseWriter, r *http.Request) {
+func (app *QuoteApplication) RootHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != http.MethodGet {
 		sendJsonResponse(w, Response{
@@ -94,7 +94,7 @@ func (app *QuoteApplication) rootHandler(w http.ResponseWriter, r *http.Request)
 	})
 }
 
-func (app *QuoteApplication) quoteHandler(w http.ResponseWriter, r *http.Request) {
+func (app *QuoteApplication) QuoteHandler(w http.ResponseWriter, r *http.Request) {
 
 	if (r.Method != http.MethodGet) && (r.Method != http.MethodDelete) {
 		sendJsonResponse(w, Response{
@@ -134,7 +134,7 @@ func (app *QuoteApplication) quoteHandler(w http.ResponseWriter, r *http.Request
 	})
 }
 
-func (app *QuoteApplication) submitHandler(w http.ResponseWriter, r *http.Request) {
+func (app *QuoteApplication) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		sendJsonResponse(w, Response{
 			Success: false,
@@ -173,10 +173,10 @@ func (app *QuoteApplication) submitHandler(w http.ResponseWriter, r *http.Reques
 	})
 }
 
-func (app *QuoteApplication) approveHandler(w http.ResponseWriter, r *http.Request) {
+func (app *QuoteApplication) ApproveHandler(w http.ResponseWriter, r *http.Request) {
 	sendJsonResponse(w, setApprovalResponse(&app.Quotes, r, true))
 }
 
-func (app *QuoteApplication) disapproveHandler(w http.ResponseWriter, r *http.Request) {
+func (app *QuoteApplication) DisapproveHandler(w http.ResponseWriter, r *http.Request) {
 	sendJsonResponse(w, setApprovalResponse(&app.Quotes, r, false))
 }

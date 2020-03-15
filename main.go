@@ -28,11 +28,11 @@ func main() {
 
 	app.Quotes.loadQuotes()
 
-	http.HandleFunc("/", app.rootHandler)
-	http.HandleFunc("/api/quote/", app.quoteHandler)
-	http.HandleFunc("/api/submit/", app.submitHandler)
-	http.HandleFunc("/api/approve/", app.approveHandler)
-	http.HandleFunc("/api/disapprove/", app.disapproveHandler)
+	http.HandleFunc("/", app.RootHandler)
+	http.HandleFunc("/api/quote/", app.QuoteHandler)
+	http.HandleFunc("/api/submit/", app.SubmitHandler)
+	http.HandleFunc("/api/approve/", app.ApproveHandler)
+	http.HandleFunc("/api/disapprove/", app.DisapproveHandler)
 
 	log.Println(fmt.Sprintf("running on port %d", port))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))

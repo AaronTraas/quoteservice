@@ -13,6 +13,9 @@ clean:
 build:
 	go build
 
+test:
+	go test
+
 run: build
 	./quoteservice 9009
 
