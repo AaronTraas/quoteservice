@@ -2,12 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"os/user"
-	"strconv"
 )
 
 type QuoteEntry struct {
@@ -29,47 +27,22 @@ func (quotes *QuoteList) getNextId() int {
 	return maxId + 1
 }
 
-func (quotes *QuoteList) setApproval(path string, idString string, approved bool) Response {
-	if idString == "" {
-		return Response{
-			Path:    path,
-			Success: false,
-			Error:   "'id' is required parameter",
-		}
-	}
-	id, errIdConvert := strconv.Atoi(idString)
-	if errIdConvert != nil {
-		return Response{
-			Path:    path,
-			Success: false,
-			Error:   "'id' is not an integer",
-		}
-	}
+func (quotes *QuoteList) setApproval(id int, approved bool) (*QuoteEntry, bool) {
 
 	quoteIndex, quote := quotes.getQuoteById(id)
 	if quoteIndex < 0 {
-		return Response{
-			Path:    path,
-			Success: false,
-			Error:   fmt.Sprintf("quote #%d not found", id),
-		}
+		return nil, false
 	}
 
 	quote.Approved = approved
 	(*quotes)[quoteIndex] = *quote
 
 	errDump := quotes.dumpQuotes()
-	errDumpString := ""
 	if errDump != nil {
-		errDumpString = errDump.Error()
+		log.Println("Failed saving DB changes")
 	}
 
-	return Response{
-		Path:    path,
-		Quote:   quote,
-		Success: errDump != nil,
-		Error:   errDumpString,
-	}
+	return quote, true
 }
 
 func (quotes *QuoteList) getQuoteById(id int) (int, *QuoteEntry) {
