@@ -22,4 +22,4 @@ install: build
 	sudo ln -s $(service_src_path) $(service_dest_path)
 	sudo systemctl enable quoteservice
 	sudo systemctl daemon-reload
-	sudo systemctl restart my_restart
+	sudo systemctl restart quoteservice
