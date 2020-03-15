@@ -1,8 +1,8 @@
-# Contributor Code of Conduct for azadi-repeats
+# Contributor Code of Conduct for quoteservice
 
 ## Standards
 
-The azadi-repeats team requests the following from all contributors:
+The quoteservice team requests the following from all contributors:
 
 - Write good code
 
