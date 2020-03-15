@@ -19,7 +19,7 @@ run: build
 install: build
 	cp $(app_src_path) $(app_dest_path)
 	echo $(mkfile_path)
-	sudo ln -s $(service_src_path) $(service_dest_path)
+	sudo ln -sf $(service_src_path) $(service_dest_path)
 	sudo systemctl enable quoteservice
 	sudo systemctl daemon-reload
 	sudo systemctl restart quoteservice
