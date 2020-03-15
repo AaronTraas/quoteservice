@@ -1,0 +1,11 @@
+[Unit]
+Description=QuoteService
+
+[Service]
+PIDFile=/tmp/quoteservice.pid-4040
+User=root
+Group=root
+ExecStart=/usr/local/bin/quoteservice 9009
+
+[Install]
+WantedBy=multi-user.target
