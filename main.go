@@ -29,6 +29,7 @@ func main() {
 	app.Quotes.loadQuotes()
 
 	http.HandleFunc("/", app.rootHandler)
+	http.HandleFunc("/api/quote/", app.quoteHandler)
 	http.HandleFunc("/api/submit/", app.submitHandler)
 	http.HandleFunc("/api/approve/", app.approveHandler)
 	http.HandleFunc("/api/disapprove/", app.disapproveHandler)

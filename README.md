@@ -28,17 +28,34 @@ Requirements:
 
 Return the list of quotes as JSON.
 
-#### GET `/api/submit/?body=[BODY]&uri=[URI]`
+#### POST `/api/quote/[ID]`
+
+Parameters:
+- `ID`: integer; unique id of quote from list of quotes.
+
+If a quote with `id` exists, returns that quote.
+
+#### POST `/api/submit/`
+
+Parameters:
+- `body`: main body of the quote. Assumed URL encoded
+- `url`: url that contains the qutoe.
 
 Create a new quote with `body` as the quote text and `uri` as the URI where
 the quote is from. This creates a new quote where `approved` will be set to
 `false`.
 
-#### GET `/api/approve/?id=[ID]`
+#### POST `/api/approve/?id=[ID]`
+
+Parameters:
+- `id`: integer; unique id of quote from list of quotes.
 
 If a quote with `id` exists, set `approved` to `true`
 
-#### GET `/api/disapprove/?id=[ID]`
+#### POST `/api/disapprove/?id=[ID]`
+
+Parameters:
+- `id`: integer; unique id of quote from list of quotes.
 
 If a quote with `id` exists, set `approved` to `true`
 

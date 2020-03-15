@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 type Response struct {
@@ -90,6 +91,46 @@ func (app *QuoteApplication) rootHandler(w http.ResponseWriter, r *http.Request)
 	sendJsonResponse(w, Response{
 		Success: true,
 		Quotes:  &app.Quotes,
+	})
+}
+
+func (app *QuoteApplication) quoteHandler(w http.ResponseWriter, r *http.Request) {
+
+	if (r.Method != http.MethodGet) && (r.Method != http.MethodDelete) {
+		sendJsonResponse(w, Response{
+			Success: false,
+			Status:  http.StatusMethodNotAllowed,
+			Error:   fmt.Sprintf("Method %s not allowed. Must be GET or DELETE.", r.Method),
+		})
+		return
+	}
+
+	uriSegments := strings.Split(r.URL.Path, "/")
+
+	idString := uriSegments[3]
+	id, errIdConvert := strconv.Atoi(idString)
+	if errIdConvert != nil {
+		sendJsonResponse(w, Response{
+			Success: false,
+			Status:  http.StatusBadRequest,
+			Error:   fmt.Sprintf("id '%s' is not an integer", idString),
+		})
+		return
+	}
+
+	quoteIndex, quote := app.Quotes.getQuoteById(id)
+	if quoteIndex < 0 {
+		sendJsonResponse(w, Response{
+			Success: false,
+			Status:  http.StatusNotFound,
+			Error:   fmt.Sprintf("quote #%d not found", id),
+		})
+		return
+	}
+
+	sendJsonResponse(w, Response{
+		Success: true,
+		Quote:   quote,
 	})
 }
 
