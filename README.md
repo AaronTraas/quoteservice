@@ -1,10 +1,12 @@
 # Quote Catalog
 
-I needed to learn [Go](https://golang.org/) for an upcoming much more complicated project, so  I thought I'd do something simple to learn how to build a basic Go web service.
+This application is a basic web service that allows the creation and
+moderation of a list of quotes. It stores the quotes in an in-memory DB. At
+time of any moderation, it dumps the DB to a JSON file. It automatically loads
+the JSON file on startup.
 
-The service has some crud-like functions for an in-memory data store, including a moderation queue. It dumps the contents of the DB on approval, and loads it on start.
-
-Also included is a Makefile, mostly for `make install`, which installs the app as systemd service.
+Also included is a Makefile, mostly for `make install`, which installs the app
+as systemd service.
 
 ## Installation
 
@@ -23,15 +25,23 @@ Requirements:
 ## Using the API
 
 #### GET `/api/quotes`
+
 Return the list of quotes as JSON.
 
 #### GET `/api/submit/?body=[BODY]&uri=[URI]`
-Create a new quote with `body` as the quote text and `uri` as the URI where the quote is from. This creates a new quote where `approved` will be set to `false`.
+
+Create a new quote with `body` as the quote text and `uri` as the URI where
+the quote is from. This creates a new quote where `approved` will be set to
+`false`.
 
 #### GET `/api/approve/?id=[ID]`
+
 If a quote with `id` exists, set `approved` to `true`
 
 #### GET `/api/disapprove/?id=[ID]`
+
 If a quote with `id` exists, set `approved` to `true`
 
-There is *no authentication* for any endpoint. When I set it up on the test server, I put nginx in front of it, a restricted `/api/approve` and `/api/disapprove` behind a HTTP Basic Auth password.
+There is *no authentication* for any endpoint. When I set it up on the test
+server, I put nginx in front of it, a restricted `/api/approve` and
+`/api/disapprove` behind a HTTP Basic Auth password.
