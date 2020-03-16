@@ -32,7 +32,7 @@ func sendJsonResponse(w http.ResponseWriter, response Response) {
 
 	responseJson, _ := json.MarshalIndent(response, "", "  ")
 
-	fmt.Fprintf(w, string(responseJson))
+	fmt.Fprint(w, string(responseJson))
 }
 
 func setApprovalResponse(quotes *QuoteList, r *http.Request, approved bool) Response {
